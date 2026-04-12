@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Speedcubing | Mountains & Math</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+  <header class="banner">
+    <div class="overlay">
+      <h1>Mountains & Math</h1>
+      <p>A mathematical journey - one theorem and one summit at a time.</p>
+    </div>
+  </header>
+
+  <nav>
+    <a href="index.html#about">About</a>
+    <a href="index.html#blog">Blog</a>
+    <a href="speedcubing.html">Speedcubing</a>
+    <a href="index.html#contact">Contact</a>
+  </nav>
+
+  <main>
+    <section id="speedcubing">
+      <h2>Speedcubing</h2>
+
+      <p>
+        Here are my current stats and progression:
+      </p>
+
+      <div class="cube-stats">
+        <p><strong>Main Cube:</strong> Moyu RS3 M V5</p>
+        <p><strong>Single PB:</strong> 17.61s</p>
+        <p><strong>Ao5:</strong> 22.10s</p>
+        <p><strong>Ao12:</strong> 24.65s</p>
+      </div>
+
+      <canvas id="cubingChart"></canvas>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2026 Mountains & Math</p>
+  </footer>
+
+  <script>
+    const cubingData = {
+      labels: ["Feb 2026", "Mar 2026", "Apr 2026"],
+      datasets: [
+        {
+          label: "Single PB",
+          data: [23.79, 20.94, 17.61],
+          borderWidth: 2,
+          fill: false,
+          tension: 0.2
+        },
+        {
+          label: "Ao5",
+          data: [26.75, 24.64, 22.10],
+          borderWidth: 2,
+          fill: false,
+          tension: 0.2
+        },
+        {
+          label: "Ao12",
+          data: [28.19, 26.46, 24.65],
+          borderWidth: 2,
+          fill: false,
+          tension: 0.2
+        }
+      ]
+    };
+
+    const ctx = document.getElementById("cubingChart").getContext("2d");
+
+    new Chart(ctx, {
+      type: "line",
+      data: cubingData,
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: "top"
+          }
+        },
+        scales: {
+          y: {
+            title: {
+              display: true,
+              text: "Time (seconds)"
+            }
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>

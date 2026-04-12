@@ -1,0 +1,137 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f7f7f7;
+  color: #222;
+  line-height: 1.6;
+}
+
+.banner {
+  position: relative;
+  height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)),
+    url("mountain.jpg") center / cover no-repeat;
+  color: white;
+  text-align: center;
+}
+
+.overlay {
+  position: relative;
+  z-index: 1;
+}
+
+.overlay h1 {
+  margin: 0;
+  font-size: 3rem;
+}
+
+.overlay p {
+  margin-top: 0.5rem;
+  font-size: 1.2rem;
+}
+
+nav {
+  background: #ffffff;
+  border-bottom: 1px solid #ddd;
+  text-align: center;
+  padding: 0.75rem;
+}
+
+nav a {
+  margin: 0 1rem;
+  text-decoration: none;
+  color: #1f3b2d;
+  font-weight: bold;
+}
+
+main {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+section {
+  background: white;
+  margin-bottom: 1.5rem;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+h2 {
+  margin-top: 0;
+  color: #1f3b2d;
+}
+
+.about-container {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.about-container img {
+  width: calc(50% - 0.5rem);
+  height: 300px;
+  object-fit: cover;
+  border-radius: 10px;
+  display: block;
+}
+
+.post {
+  border-top: 1px solid #eee;
+  padding-top: 1rem;
+  margin-top: 1rem;
+}
+
+.cube-stats {
+  margin-top: 1rem;
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background: #f1f5f3;
+  border-left: 4px solid #1f3b2d;
+  border-radius: 6px;
+}
+
+.cube-stats p {
+  margin: 0.4rem 0;
+}
+
+#cubingChart {
+  margin-top: 1rem;
+  max-width: 100%;
+}
+
+footer {
+  text-align: center;
+  padding: 2rem 1rem;
+  color: #666;
+  font-size: 0.95rem;
+}
+
+@media (max-width: 700px) {
+  .about-container {
+    flex-direction: column;
+  }
+
+  .about-container img {
+    width: 100%;
+    height: 250px;
+  }
+
+  .overlay h1 {
+    font-size: 2.2rem;
+  }
+
+  .overlay p {
+    font-size: 1rem;
+  }
+
+  nav a {
+    display: inline-block;
+    margin: 0.35rem 0.6rem;
+  }
+}

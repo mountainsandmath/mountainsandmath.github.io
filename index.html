@@ -4,123 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Mountains & Math</title>
-
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f7f7f7;
-      color: #222;
-      line-height: 1.6;
-    }
-
-    .banner {
-      position: relative;
-      height: 400px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background:
-        linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)),
-        url("mountain.jpg") center / cover no-repeat;
-      color: white;
-      text-align: center;
-    }
-
-    .overlay {
-      position: relative;
-      z-index: 1;
-    }
-
-    .overlay h1 {
-      margin: 0;
-      font-size: 3rem;
-    }
-
-    .overlay p {
-      margin-top: 0.5rem;
-      font-size: 1.2rem;
-    }
-
-    nav {
-      background: #ffffff;
-      border-bottom: 1px solid #ddd;
-      text-align: center;
-      padding: 0.75rem;
-    }
-
-    nav a {
-      margin: 0 1rem;
-      text-decoration: none;
-      color: #1f3b2d;
-      font-weight: bold;
-    }
-
-    main {
-      max-width: 800px;
-      margin: 2rem auto;
-      padding: 0 1rem;
-    }
-
-    section {
-      background: white;
-      margin-bottom: 1.5rem;
-      padding: 1.5rem;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-    }
-
-    h2 {
-      margin-top: 0;
-      color: #1f3b2d;
-    }
-
-    .about-container {
-      display: flex;
-      gap: 1rem;
-      margin-bottom: 1rem;
-    }
-
-    .about-container img {
-      width: calc(50% - 0.5rem);
-      height: 300px;
-      object-fit: cover;
-      border-radius: 10px;
-      display: block;
-    }
-
-    .post {
-      border-top: 1px solid #eee;
-      padding-top: 1rem;
-      margin-top: 1rem;
-    }
-
-    footer {
-      text-align: center;
-      padding: 2rem 1rem;
-      color: #666;
-      font-size: 0.95rem;
-    }
-
-.cube-stats {
-  margin-top: 1rem;
-  margin-bottom: 1.5rem;
-  padding: 1rem;
-  background: #f1f5f3;
-  border-left: 4px solid #1f3b2d;
-  border-radius: 6px;
-}
-
-.cube-stats p {
-  margin: 0.4rem 0;
-}
-
-#cubingChart {
-  margin-top: 1rem;
-  max-width: 100%;
-}
-  </style>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 
 <body>
@@ -134,8 +18,8 @@
   <nav>
     <a href="#about">About</a>
     <a href="#blog">Blog</a>
+    <a href="speedcubing.html">Speedcubing</a>
     <a href="#contact">Contact</a>
-    <a href="#speedcubing">Speedcubing</a>
   </nav>
 
   <main>
@@ -148,50 +32,29 @@
       </div>
 
       <p>
-  I created this site as a space to bring together two things I care deeply about: mathematics and the mountains.
-  It serves as a place to document my learning journey as I continue to grow in math, and to share my thoughts,
-  experiences, and interests along the way.
-</p>
+        I created this site as a space to bring together two things I care deeply about: mathematics and the mountains.
+        It serves as a place to document my learning journey as I continue to grow in math, and to share my thoughts,
+        experiences, and interests along the way.
+      </p>
 
-<p>
-  I also hope this can be a resource for my students; to show that I am a real person, and that mathematics can be
-  interesting and deeply connected to everyday life.
-</p>
+      <p>
+        I also hope this can be a resource for my students; to show that I am a real person, and that mathematics can be
+        interesting and deeply connected to everyday life.
+      </p>
 
-<p>
-  My mathematical interests are broad, with particular curiosity in representation theory, algebraic geometry,
-  and number theory. I am currently focused on developing my mathematical pedagogy.
-  Outside of math, I enjoy learning Mandarin, exploring etymology, philosophy, speedcubing, baking, and trail running.
-</p>
+      <p>
+        My mathematical interests are broad, with particular curiosity in representation theory, algebraic geometry,
+        and number theory. I am currently focused on developing my mathematical pedagogy.
+        Outside of math, I enjoy learning Mandarin, exploring etymology, philosophy, speedcubing, baking, and trail running.
+      </p>
     </section>
 
     <section id="blog">
       <h2>Recent Posts</h2>
-
       <div class="post">
-        <p>
-          Posts coming soon
-        </p>
+        <p>Posts coming soon</p>
       </div>
     </section>
-
-<section id="speedcubing">
-  <h2>Speedcubing</h2>
-
-  <p>
-    Here are my current stats and progression:
-  </p>
-
-  <div class="cube-stats">
-    <p><strong>Main Cube:</strong> Moyu RS3 M V5</p>
-    <p><strong>Single PB:</strong> 17.61s</p>
-    <p><strong>Ao5:</strong> 22.10s</p>
-    <p><strong>Ao12:</strong> 24.65s</p>
-  </div>
-
-  <canvas id="cubingChart"></canvas>
-</section>
-</section>
 
     <section id="contact">
       <h2>Contact</h2>
@@ -199,56 +62,5 @@
     </section>
   </main>
 
-<script>
-  const cubingData = {
-    labels: ["Feb 2026", "Mar 2026", "Apr 2026"],
-    datasets: [
-      {
-        label: "Single PB",
-        data: [23.79, 20.94, 17.61],
-        borderWidth: 2,
-        fill: false,
-        tension: 0.2
-      },
-      {
-        label: "Ao5",
-        data: [26.75, 24.64, 22.10],
-        borderWidth: 2,
-        fill: false,
-        tension: 0.2
-      },
-      {
-        label: "Ao12",
-        data: [28.19, 26.46, 24.65],
-        borderWidth: 2,
-        fill: false,
-        tension: 0.2
-      }
-    ]
-  };
-
-  const ctx = document.getElementById("cubingChart").getContext("2d");
-
-  new Chart(ctx, {
-    type: "line",
-    data: cubingData,
-    options: {
-      responsive: true,
-      plugins: {
-        legend: {
-          position: "top"
-        }
-      },
-      scales: {
-        y: {
-          title: {
-            display: true,
-            text: "Time (seconds)"
-          }
-        }
-      }
-    }
-  });
-</script>
 </body>
 </html>
