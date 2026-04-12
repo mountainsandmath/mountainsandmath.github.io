@@ -29,7 +29,7 @@
       <h2 class="post-title">Packing 17 Squares in a Square</h2>
       <div class="post-meta">April 12, 2026</div>
       <p class="post-subtitle">
-        A first look at how square packings behave nicely in some cases and unexpectedly in others.
+        A first look at packing problems.
       </p>
     </section>
 
@@ -37,22 +37,23 @@
       <section>
         <h3>The Problem</h3>
         <p>
-          Suppose we want to pack <em>n</em> smaller congruent squares into one larger square region as efficiently as possible.
-          For some values of <em>n</em>, the answer looks exactly how we would expect: orderly, symmetric, and easy to describe.
-          For other values, the geometry becomes much stranger.
+          At its simplest form, a packing problem aims to find the most efficient packing of some number of objects into a container. Efficiency can be measured by minimizing the amount of unused area or minimizing the size of the container.
         </p>
+	<p>
+	 For now, we restrict ourselves by considering: given <em>n</em> many unit squares, what is the smallest square we can construct that contains them all?
+	</p>
       </section>
 
       <section>
         <h3>Simple Cases: n = 9 and n = 25</h3>
         <p>
-          When <em>n</em> is a perfect square, things behave very cleanly. If <em>n = 9</em>, we can arrange the squares in a
-          3 by 3 grid. If <em>n = 25</em>, we can arrange them in a 5 by 5 grid. In general, if
-          <em>n = k²</em>, the squares fit perfectly into a square grid with side length <em>k</em>.
-        </p>
-        <p>
-          These examples are satisfying because the combinatorics and the geometry align perfectly: the number of small squares
-          matches the structure of the larger square.
+          When <em>n</em> is a perfect square, things behave very nicely. If <em>n = 9</em>, we can arrange the squares in a
+          3 by 3 grid. Intuition tells us this is the most efficient packing and the smallest square that contains them has a side length of 3. Indeed, if we were to shrink the containing square any further, it would force our filling squares to overlap. Inspection also shows us that we have no unused area! The area of the containing square is <em>3²=9</em>, and we have 9 unit squares for a total filling area of 9.
+	</p>
+
+	<p>
+	Similarly, if <em>n = 25</em>, we can arrange them in a 5 by 5 grid. We can quickly extrapolate this pattern and postulate that if we have
+          <em>n = k²</em> many filling squares, the squares fit perfectly into a square grid with side length <em>k</em>.
         </p>
 
         <figure class="post-figure">
@@ -64,16 +65,15 @@
       <section>
         <h3>The Case n = 17</h3>
         <p>
-          Then we get to 17, and the picture changes completely.
+          When we have 17 squares, the picture changes completely.
         </p>
         <p>
           There is no obvious square grid, and the best known constructions look much less orderly. Instead of a neat pattern,
-          the arrangement appears irregular and almost improvised. This is one of the reasons the problem is so visually compelling:
+          the arrangement appears irregular and haphazard. This is one of the reasons the problem is so visually compelling:
           even though the pieces themselves are simple, the optimal arrangement is not.
         </p>
         <p>
-          What makes this even more interesting is that the best known construction is tied to an open problem: while there is a
-          most efficient packing currently known, determining whether it is <em>the</em> optimal packing remains unresolved.
+          The best construction is currently an open problem: is our current optimal packing <em>the</em> most optimal packing possible? 
         </p>
 
         <figure class="post-figure">
@@ -84,12 +84,8 @@
 
       <section>
         <p>
-          I like this example because it shows how a very elementary question can lead to genuinely subtle mathematics.
           The problem is easy to state, easy to draw, and easy to experiment with, but the underlying optimization problem is
-          much deeper than it first appears.
-        </p>
-        <p>
-          It is a good reminder that simple mathematical objects often become most interesting exactly when symmetry starts to break down.
+          much deeper than it first appears. The complexity of these problems balloon extremely quickly. Here, we have only covered 2-dimensional squares. In general, we can ask the exact same questions for other shapes such as circles and hexagons, or we can go up in dimensions to spheres, cubes or even 11-dimensional objects! One could spend their entire life working on problems of this flavor.
         </p>
       </section>
     </section>
