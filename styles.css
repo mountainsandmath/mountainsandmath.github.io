@@ -89,20 +89,28 @@ h2 {
 
 .cube-stats {
   margin-top: 1rem;
-  margin-bottom: 1.5rem;
-  padding: 1rem;
+  margin-bottom: 2rem;
+  padding: 1rem 1.25rem;
   background: #f1f5f3;
   border-left: 4px solid #1f3b2d;
-  border-radius: 6px;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
 }
 
 .cube-stats p {
-  margin: 0.4rem 0;
+  margin: 0.45rem 0;
 }
 
-#cubingChart {
+.speedcubing-page main {
+  max-width: 950px;
+}
+
+#cubingError {
   margin-top: 1rem;
-  max-width: 100%;
+  padding: 0.85rem 1rem;
+  background: #fff4f4;
+  border: 1px solid #e2bcbc;
+  border-radius: 8px;
 }
 
 .active {
@@ -110,17 +118,28 @@ h2 {
   color: #0f2a1f;
 }
 
+.meme-page main {
+  max-width: 950px;
+}
+
 .meme-intro {
   margin-bottom: 1.5rem;
 }
 
-.meme-feed {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
+.meme-section-title {
+  color: #1f3b2d;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
 }
 
-.meme-entry {
+.meme-featured-feed {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.featured-meme {
   background: #fafafa;
   border: 1px solid #e8e8e8;
   border-radius: 12px;
@@ -128,13 +147,7 @@ h2 {
   box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
 
-.meme-date {
-  font-size: 0.95rem;
-  color: #666;
-  margin-bottom: 0.75rem;
-}
-
-.meme-entry img {
+.featured-meme img {
   width: 100%;
   max-width: 700px;
   height: auto;
@@ -143,15 +156,42 @@ h2 {
   border-radius: 10px;
 }
 
-.meme-caption {
-  margin-top: 0.9rem;
+.meme-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
 }
 
-.meme-caption p {
-  margin: 0;
+.meme-card {
+  background: #fafafa;
+  border: 1px solid #e8e8e8;
+  border-radius: 12px;
+  padding: 0.75rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
-.meme-page main {
-  max-width: 900px;
+
+.meme-card img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  display: block;
+  border-radius: 10px;
+}
+
+.meme-date {
+  font-size: 0.95rem;
+  color: #666;
+  margin-top: 0.6rem;
+}
+
+@media (max-width: 700px) {
+  .featured-meme {
+    padding: 0.85rem;
+  }
+
+  .meme-card img {
+    height: auto;
+  }
 }
 
 .post h3 {
@@ -280,17 +320,27 @@ h2 {
 }
 
 canvas {
-  margin-top: 1rem;
-  margin-bottom: 2rem;
+  display: block;
+  width: 100%;
   max-width: 100%;
+  margin: 1rem 0 2.5rem 0;
+  background: #fcfcfc;
+  border: 1px solid #e8e8e8;
+  border-radius: 10px;
+  padding: 0.75rem;
+  box-sizing: border-box;
 }
 
 #speedcubing h3 {
   color: #1f3b2d;
-  margin-top: 2rem;
-  margin-bottom: 0.75rem;
+  margin-top: 2.25rem;
+  margin-bottom: 0.9rem;
+  font-size: 1.15rem;
 }
 
+#speedcubing p {
+  margin-bottom: 1rem;
+}
 @media (max-width: 700px) {
   .meme-entry {
     padding: 0.85rem;

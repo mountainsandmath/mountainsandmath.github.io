@@ -8,7 +8,7 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
-<body>
+<body class="speedcubing-page">
   <header class="banner">
     <div class="overlay">
       <h1>Mountains & Math</h1>
@@ -16,14 +16,14 @@
     </div>
   </header>
 
-   <nav>
-  <a href="index.html">Home</a>
-  <a href="index.html#about">About</a>
-  <a href="blog.html">Blog</a>
-  <a href="speedcubing.html" class="active">Speedcubing</a>
-  <a href="memes.html">Memes</a>
-  <a href="index.html#contact">Contact</a>
-</nav>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="index.html#about">About</a>
+    <a href="blog.html">Blog</a>
+    <a href="speedcubing.html" class="active">Speedcubing</a>
+    <a href="memes.html">Memes</a>
+    <a href="index.html#contact">Contact</a>
+  </nav>
 
   <main>
     <section id="speedcubing">
@@ -34,307 +34,455 @@
       </p>
 
       <div class="cube-stats">
-  <p><strong>Main Cube:</strong> Moyu RS3 M V5</p>
-  <p><strong>Single PB:</strong> <span id="singlePBStat">—</span></p>
-  <p><strong>Ao5 PB:</strong> <span id="ao5PBStat">—</span></p>
-  <p><strong>Ao12 PB:</strong> <span id="ao12PBStat">—</span></p>
-</div>
+        <p><strong>Main Cube:</strong> Moyu RS3 M V5</p>
+        <p><strong>Single PB:</strong> <span id="singlePBStat">—</span></p>
+        <p><strong>Ao5 PB:</strong> <span id="ao5PBStat">—</span></p>
+        <p><strong>Ao12 PB:</strong> <span id="ao12PBStat">—</span></p>
+      </div>
 
-<h3>Raw Solve Times and PB Progression</h3>
-<canvas id="cubingRawChart"></canvas>
+      <h3>Raw Solve Times and PB Progression</h3>
+      <canvas id="cubingRawChart"></canvas>
 
-<h3>Rolling Averages</h3>
-<canvas id="cubingAverageChart"></canvas>
+      <h3>Rolling Averages</h3>
+      <canvas id="cubingAverageChart"></canvas>
 
-<h3>Bimonthly Summary</h3>
-<canvas id="cubingPeriodChart"></canvas>
+      <h3>Bimonthly Summary</h3>
+      <canvas id="cubingPeriodChart"></canvas>
 
-<p id="cubingError" style="color: #8b0000; font-weight: bold;"></p>
-
-      <canvas id="cubingChart"></canvas>
+      <p id="cubingError" style="color: #8b0000; font-weight: bold;"></p>
     </section>
   </main>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <footer>
+    <p>© 2026 Mountains & Math</p>
+  </footer>
 
-<script>
-function parseTimeToSeconds(value) {
-  if (!value) return null;
-  value = value.trim();
+  <script>
+    function parseTimeToSeconds(value) {
+      if (!value) return null;
+      value = value.trim();
 
-  if (value.toUpperCase() === "DNF") return null;
+      if (value.toUpperCase() === "DNF") return null;
 
-  if (value.includes(":")) {
-    const [min, sec] = value.split(":").map(Number);
-    if (Number.isNaN(min) || Number.isNaN(sec)) return null;
-    return 60 * min + sec;
-  }
+      if (value.includes(":")) {
+        const [min, sec] = value.split(":").map(Number);
+        if (Number.isNaN(min) || Number.isNaN(sec)) return null;
+        return 60 * min + sec;
+      }
 
-  const num = Number(value);
-  return Number.isNaN(num) ? null : num;
-}
-
-function averageOfMiddle(values) {
-  const valid = values.filter(v => v !== null);
-  const dnfs = values.length - valid.length;
-
-  if (values.length === 5) {
-    if (dnfs >= 2) return null;
-    const arr = [...valid].sort((a, b) => a - b);
-    if (dnfs === 1) return arr.slice(0, 3).reduce((a, b) => a + b, 0) / 3;
-    return arr.slice(1, 4).reduce((a, b) => a + b, 0) / 3;
-  }
-
-  if (values.length === 12) {
-    if (dnfs >= 2) return null;
-    const arr = [...valid].sort((a, b) => a - b);
-    if (dnfs === 1) return arr.slice(0, 10).reduce((a, b) => a + b, 0) / 10;
-    return arr.slice(1, 11).reduce((a, b) => a + b, 0) / 10;
-  }
-
-  return null;
-}
-
-function formatDateBucket(dateObj) {
-  const month = dateObj.toLocaleString("en-US", { month: "short" });
-  const year = dateObj.getFullYear();
-  const half = dateObj.getDate() <= 15 ? "Early" : "Late";
-  return `${half} ${month} ${year}`;
-}
-
-function formatSeconds(seconds) {
-  if (seconds === null || !Number.isFinite(seconds)) return "—";
-  return `${seconds.toFixed(2)}s`;
-}
-
-async function loadCubingData() {
-  try {
-    const response = await fetch("cstimer.csv?v=" + Date.now(), { cache: "no-store" });
-    if (!response.ok) {
-      throw new Error(`Could not load cstimer.csv (status ${response.status})`);
+      const num = Number(value);
+      return Number.isNaN(num) ? null : num;
     }
 
-    const text = await response.text();
-    const rows = text.trim().split("\n").slice(1);
+    function averageOfMiddle(values) {
+      const valid = values.filter(v => v !== null);
+      const dnfs = values.length - valid.length;
 
-    const solves = [];
+      if (values.length === 5) {
+        if (dnfs >= 2) return null;
+        const arr = [...valid].sort((a, b) => a - b);
+        if (dnfs === 1) return arr.slice(0, 3).reduce((a, b) => a + b, 0) / 3;
+        return arr.slice(1, 4).reduce((a, b) => a + b, 0) / 3;
+      }
 
-    for (const row of rows) {
-      const cols = row.split(";");
-      if (cols.length < 5) continue;
+      if (values.length === 12) {
+        if (dnfs >= 2) return null;
+        const arr = [...valid].sort((a, b) => a - b);
+        if (dnfs === 1) return arr.slice(0, 10).reduce((a, b) => a + b, 0) / 10;
+        return arr.slice(1, 11).reduce((a, b) => a + b, 0) / 10;
+      }
 
-      const solveNumber = Number(cols[0].trim());
-      const time = parseTimeToSeconds(cols[1]);
-      const date = new Date(cols[4].trim());
-
-      if (!Number.isFinite(solveNumber) || Number.isNaN(date.getTime())) continue;
-
-      solves.push({
-        solveNumber,
-        time,
-        date
-      });
+      return null;
     }
 
-    if (solves.length === 0) {
-      throw new Error("No solves were parsed from the CSV.");
+    function formatDateBucket(dateObj) {
+      const month = dateObj.toLocaleString("en-US", { month: "short" });
+      const year = dateObj.getFullYear();
+      const half = dateObj.getDate() <= 15 ? "Early" : "Late";
+      return `${half} ${month} ${year}`;
     }
 
-    solves.sort((a, b) => a.date - b.date);
-
-    const rawLabels = solves.map(s => s.solveNumber);
-    const rawTimes = solves.map(s => s.time);
-
-    let runningSinglePB = Infinity;
-    const singlePBLine = solves.map(s => {
-      if (s.time !== null && s.time < runningSinglePB) runningSinglePB = s.time;
-      return Number.isFinite(runningSinglePB) ? runningSinglePB : null;
-    });
-
-    const ao5Series = solves.map((_, i) => {
-      if (i < 4) return null;
-      const window = solves.slice(i - 4, i + 1).map(s => s.time);
-      return averageOfMiddle(window);
-    });
-
-    const ao12Series = solves.map((_, i) => {
-      if (i < 11) return null;
-      const window = solves.slice(i - 11, i + 1).map(s => s.time);
-      return averageOfMiddle(window);
-    });
-
-    let runningAo5PB = Infinity;
-    const ao5PBLine = ao5Series.map(v => {
-      if (v !== null && v < runningAo5PB) runningAo5PB = v;
-      return Number.isFinite(runningAo5PB) ? runningAo5PB : null;
-    });
-
-    let runningAo12PB = Infinity;
-    const ao12PBLine = ao12Series.map(v => {
-      if (v !== null && v < runningAo12PB) runningAo12PB = v;
-      return Number.isFinite(runningAo12PB) ? runningAo12PB : null;
-    });
-
-    document.getElementById("singlePBStat").textContent = formatSeconds(
-      Math.min(...rawTimes.filter(v => v !== null))
-    );
-
-    document.getElementById("ao5PBStat").textContent = formatSeconds(
-      Math.min(...ao5Series.filter(v => v !== null))
-    );
-
-    document.getElementById("ao12PBStat").textContent = formatSeconds(
-      Math.min(...ao12Series.filter(v => v !== null))
-    );
-
-    const buckets = new Map();
-
-    for (const solve of solves) {
-      if (solve.time === null) continue;
-      const key = formatDateBucket(solve.date);
-      if (!buckets.has(key)) buckets.set(key, []);
-      buckets.get(key).push(solve.time);
+    function formatSeconds(seconds) {
+      if (seconds === null || !Number.isFinite(seconds)) return "—";
+      return `${seconds.toFixed(2)}s`;
     }
 
-    const periodLabels = Array.from(buckets.keys());
-    const periodMean = periodLabels.map(label => {
-      const vals = buckets.get(label);
-      return vals.reduce((a, b) => a + b, 0) / vals.length;
-    });
-    const periodBest = periodLabels.map(label => Math.min(...buckets.get(label)));
+    const monthDividerPlugin = {
+      id: "monthDividerPlugin",
+      afterDatasetsDraw(chart, args, pluginOptions) {
+        const { ctx, chartArea, scales } = chart;
+        const markers = pluginOptions.markers || [];
+        const labels = pluginOptions.labels || [];
 
-    new Chart(document.getElementById("cubingRawChart"), {
-      type: "line",
-      data: {
-        labels: rawLabels,
-        datasets: [
-          {
-            label: "Raw Solve Times",
-            data: rawTimes,
-            borderWidth: 1,
-            pointRadius: 1,
-            tension: 0
-          },
-          {
-            label: "Single PB",
-            data: singlePBLine,
-            borderWidth: 2,
-            pointRadius: 0,
-            tension: 0
+        if (!markers.length || !chartArea || !scales.x) return;
+
+        ctx.save();
+        ctx.strokeStyle = "rgba(0, 0, 0, 0.25)";
+        ctx.lineWidth = 1;
+        ctx.fillStyle = "rgba(0, 0, 0, 0.6)";
+        ctx.font = "12px Arial";
+
+        markers.forEach((index, i) => {
+          const x = scales.x.getPixelForValue(index);
+
+          if (x < chartArea.left || x > chartArea.right) return;
+
+          ctx.beginPath();
+          ctx.moveTo(x, chartArea.top);
+          ctx.lineTo(x, chartArea.bottom);
+          ctx.stroke();
+
+          const label = labels[i];
+          if (label && i > 0) {
+            ctx.fillText(label, x + 4, chartArea.top + 14);
           }
-        ]
-      },
-      options: {
-        responsive: true,
-        plugins: {
-          legend: { position: "top" }
-        },
-        scales: {
-          x: {
-            title: { display: true, text: "Solve Number" }
-          },
-          y: {
-            title: { display: true, text: "Time (seconds)" }
+        });
+
+        ctx.restore();
+      }
+    };
+
+    async function loadCubingData() {
+      try {
+        const response = await fetch(`cstimer.csv?v=${Date.now()}`, {
+          cache: "no-store"
+        });
+
+        if (!response.ok) {
+          throw new Error(`Could not load cstimer.csv (status ${response.status})`);
+        }
+
+        const text = await response.text();
+        const rows = text.trim().split("\n").slice(1);
+        const solves = [];
+
+        for (const row of rows) {
+          const cols = row.split(";");
+          if (cols.length < 5) continue;
+
+          const solveNumber = Number(cols[0].trim());
+          const time = parseTimeToSeconds(cols[1]);
+          const date = new Date(cols[4].trim());
+
+          if (!Number.isFinite(solveNumber) || Number.isNaN(date.getTime())) continue;
+
+          solves.push({
+            solveNumber,
+            time,
+            date
+          });
+        }
+
+        if (solves.length === 0) {
+          throw new Error("No solves were parsed from the CSV.");
+        }
+
+        solves.sort((a, b) => a.date - b.date);
+
+        const monthMarkers = [];
+        const monthMarkerLabels = [];
+        let lastMonthKey = null;
+
+        solves.forEach((solve, index) => {
+          const year = solve.date.getFullYear();
+          const month = solve.date.getMonth();
+          const monthKey = `${year}-${month}`;
+
+          if (monthKey !== lastMonthKey) {
+            monthMarkers.push(index);
+            monthMarkerLabels.push(
+              solve.date.toLocaleString("en-US", { month: "short", year: "2-digit" })
+            );
+            lastMonthKey = monthKey;
+          }
+        });
+
+        const rawLabels = solves.map((_, i) => i);
+        const rawTimes = solves.map(s => s.time);
+
+        let runningSinglePB = Infinity;
+        const singlePBLine = solves.map(s => {
+          if (s.time !== null && s.time < runningSinglePB) {
+            runningSinglePB = s.time;
+          }
+          return Number.isFinite(runningSinglePB) ? runningSinglePB : null;
+        });
+
+        const ao5Series = solves.map((_, i) => {
+          if (i < 4) return null;
+          const window = solves.slice(i - 4, i + 1).map(s => s.time);
+          return averageOfMiddle(window);
+        });
+
+        const ao12Series = solves.map((_, i) => {
+          if (i < 11) return null;
+          const window = solves.slice(i - 11, i + 1).map(s => s.time);
+          return averageOfMiddle(window);
+        });
+
+        let runningAo5PB = Infinity;
+        const ao5PBLine = ao5Series.map(v => {
+          if (v !== null && v < runningAo5PB) {
+            runningAo5PB = v;
+          }
+          return Number.isFinite(runningAo5PB) ? runningAo5PB : null;
+        });
+
+        let runningAo12PB = Infinity;
+        const ao12PBLine = ao12Series.map(v => {
+          if (v !== null && v < runningAo12PB) {
+            runningAo12PB = v;
+          }
+          return Number.isFinite(runningAo12PB) ? runningAo12PB : null;
+        });
+
+        const validSingles = rawTimes.filter(v => v !== null);
+        const validAo5 = ao5Series.filter(v => v !== null);
+        const validAo12 = ao12Series.filter(v => v !== null);
+
+        document.getElementById("singlePBStat").textContent = formatSeconds(
+          validSingles.length ? Math.min(...validSingles) : null
+        );
+
+        document.getElementById("ao5PBStat").textContent = formatSeconds(
+          validAo5.length ? Math.min(...validAo5) : null
+        );
+
+        document.getElementById("ao12PBStat").textContent = formatSeconds(
+          validAo12.length ? Math.min(...validAo12) : null
+        );
+
+        const buckets = new Map();
+
+        function ensureBucket(label) {
+          if (!buckets.has(label)) {
+            buckets.set(label, {
+              singles: [],
+              ao5s: [],
+              ao12s: []
+            });
           }
         }
-      }
-    });
 
-    new Chart(document.getElementById("cubingAverageChart"), {
-      type: "line",
-      data: {
-        labels: rawLabels,
-        datasets: [
-          {
-            label: "ao5",
-            data: ao5Series,
-            borderWidth: 2,
-            pointRadius: 0,
-            tension: 0.15
-          },
-          {
-            label: "ao5 PB",
-            data: ao5PBLine,
-            borderWidth: 2,
-            pointRadius: 0,
-            tension: 0
-          },
-          {
-            label: "ao12",
-            data: ao12Series,
-            borderWidth: 2,
-            pointRadius: 0,
-            tension: 0.15
-          },
-          {
-            label: "ao12 PB",
-            data: ao12PBLine,
-            borderWidth: 2,
-            pointRadius: 0,
-            tension: 0
-          }
-        ]
-      },
-      options: {
-        responsive: true,
-        plugins: {
-          legend: { position: "top" }
-        },
-        scales: {
-          x: {
-            title: { display: true, text: "Solve Number" }
-          },
-          y: {
-            title: { display: true, text: "Average Time (seconds)" }
-          }
-        }
-      }
-    });
+        solves.forEach((solve, index) => {
+          const bucketLabel = formatDateBucket(solve.date);
+          ensureBucket(bucketLabel);
 
-    new Chart(document.getElementById("cubingPeriodChart"), {
-      type: "line",
-      data: {
-        labels: periodLabels,
-        datasets: [
-          {
-            label: "Average Solve Time",
-            data: periodMean,
-            borderWidth: 2,
-            pointRadius: 3,
-            tension: 0.2
-          },
-          {
-            label: "Best Solve in Period",
-            data: periodBest,
-            borderWidth: 2,
-            pointRadius: 3,
-            tension: 0.2
+          if (solve.time !== null) {
+            buckets.get(bucketLabel).singles.push(solve.time);
           }
-        ]
-      },
-      options: {
-        responsive: true,
-        plugins: {
-          legend: { position: "top" }
-        },
-        scales: {
-          x: {
-            title: { display: true, text: "Time Period" }
-          },
-          y: {
-            title: { display: true, text: "Time (seconds)" }
-          }
-        }
-      }
-    });
-  } catch (err) {
-    console.error(err);
-    document.getElementById("cubingError").textContent =
-      "Graph failed to load. This usually means the CSV could not be fetched. Open the page through GitHub Pages or a local server, not as a file on your computer.";
-  }
-}
 
-loadCubingData();
-</script>
+          if (ao5Series[index] !== null) {
+            buckets.get(bucketLabel).ao5s.push(ao5Series[index]);
+          }
+
+          if (ao12Series[index] !== null) {
+            buckets.get(bucketLabel).ao12s.push(ao12Series[index]);
+          }
+        });
+
+        const periodLabels = Array.from(buckets.keys());
+
+        const periodSingleMean = periodLabels.map(label => {
+          const vals = buckets.get(label).singles;
+          return vals.length ? vals.reduce((a, b) => a + b, 0) / vals.length : null;
+        });
+
+        const periodSingleBest = periodLabels.map(label => {
+          const vals = buckets.get(label).singles;
+          return vals.length ? Math.min(...vals) : null;
+        });
+
+        const periodAo5Mean = periodLabels.map(label => {
+          const vals = buckets.get(label).ao5s;
+          return vals.length ? vals.reduce((a, b) => a + b, 0) / vals.length : null;
+        });
+
+        const periodAo5Best = periodLabels.map(label => {
+          const vals = buckets.get(label).ao5s;
+          return vals.length ? Math.min(...vals) : null;
+        });
+
+        const periodAo12Mean = periodLabels.map(label => {
+          const vals = buckets.get(label).ao12s;
+          return vals.length ? vals.reduce((a, b) => a + b, 0) / vals.length : null;
+        });
+
+        const periodAo12Best = periodLabels.map(label => {
+          const vals = buckets.get(label).ao12s;
+          return vals.length ? Math.min(...vals) : null;
+        });
+
+        new Chart(document.getElementById("cubingRawChart"), {
+          type: "line",
+          data: {
+            labels: rawLabels,
+            datasets: [
+              {
+                label: "Raw Solve Times",
+                data: rawTimes,
+                borderWidth: 1,
+                pointRadius: 1,
+                tension: 0
+              },
+              {
+                label: "Single PB",
+                data: singlePBLine,
+                borderWidth: 2,
+                pointRadius: 0,
+                tension: 0
+              }
+            ]
+          },
+          plugins: [monthDividerPlugin],
+          options: {
+            responsive: true,
+            plugins: {
+              legend: { position: "top" },
+              monthDividerPlugin: {
+                markers: monthMarkers,
+                labels: monthMarkerLabels
+              }
+            },
+            scales: {
+              x: {
+                title: { display: true, text: "Solve Number" }
+              },
+              y: {
+                title: { display: true, text: "Time (seconds)" }
+              }
+            }
+          }
+        });
+
+        new Chart(document.getElementById("cubingAverageChart"), {
+          type: "line",
+          data: {
+            labels: rawLabels,
+            datasets: [
+              {
+                label: "ao5",
+                data: ao5Series,
+                borderWidth: 2,
+                pointRadius: 0,
+                tension: 0.15
+              },
+              {
+                label: "ao5 PB",
+                data: ao5PBLine,
+                borderWidth: 2,
+                pointRadius: 0,
+                tension: 0
+              },
+              {
+                label: "ao12",
+                data: ao12Series,
+                borderWidth: 2,
+                pointRadius: 0,
+                tension: 0.15
+              },
+              {
+                label: "ao12 PB",
+                data: ao12PBLine,
+                borderWidth: 2,
+                pointRadius: 0,
+                tension: 0
+              }
+            ]
+          },
+          plugins: [monthDividerPlugin],
+          options: {
+            responsive: true,
+            plugins: {
+              legend: { position: "top" },
+              monthDividerPlugin: {
+                markers: monthMarkers,
+                labels: monthMarkerLabels
+              }
+            },
+            scales: {
+              x: {
+                title: { display: true, text: "Solve Number" }
+              },
+              y: {
+                title: { display: true, text: "Average Time (seconds)" }
+              }
+            }
+          }
+        });
+
+        new Chart(document.getElementById("cubingPeriodChart"), {
+          type: "line",
+          data: {
+            labels: periodLabels,
+            datasets: [
+              {
+                label: "Best Single",
+                data: periodSingleBest,
+                borderWidth: 2,
+                pointRadius: 3,
+                tension: 0.2
+              },
+              {
+                label: "Average Single",
+                data: periodSingleMean,
+                borderWidth: 2,
+                pointRadius: 3,
+                tension: 0.2
+              },
+              {
+                label: "Best ao5",
+                data: periodAo5Best,
+                borderWidth: 2,
+                pointRadius: 3,
+                tension: 0.2
+              },
+              {
+                label: "Average ao5",
+                data: periodAo5Mean,
+                borderWidth: 2,
+                pointRadius: 3,
+                tension: 0.2
+              },
+              {
+                label: "Best ao12",
+                data: periodAo12Best,
+                borderWidth: 2,
+                pointRadius: 3,
+                tension: 0.2
+              },
+              {
+                label: "Average ao12",
+                data: periodAo12Mean,
+                borderWidth: 2,
+                pointRadius: 3,
+                tension: 0.2
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              legend: { position: "top" }
+            },
+            scales: {
+              x: {
+                title: { display: true, text: "Time Period" }
+              },
+              y: {
+                title: { display: true, text: "Time (seconds)" }
+              }
+            }
+          }
+        });
+      } catch (err) {
+        console.error(err);
+        document.getElementById("cubingError").textContent =
+          "Graph failed to load. Check that cstimer.csv is in the same folder as speedcubing.html, and open the page through GitHub Pages or a local server.";
+      }
+    }
+
+    loadCubingData();
+  </script>
 </body>
 </html>
