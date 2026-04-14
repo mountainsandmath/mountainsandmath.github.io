@@ -279,6 +279,18 @@ h2 {
   text-decoration: underline;
 }
 
+canvas {
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+  max-width: 100%;
+}
+
+#speedcubing h3 {
+  color: #1f3b2d;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+}
+
 @media (max-width: 700px) {
   .meme-entry {
     padding: 0.85rem;
