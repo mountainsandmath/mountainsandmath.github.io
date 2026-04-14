@@ -109,7 +109,7 @@ function formatSeconds(seconds) {
 
 async function loadCubingData() {
   try {
-    const response = await fetch("cstimer.csv");
+    const response = await fetch("cstimer.csv?v=" + Date.now(), { cache: "no-store" });
     if (!response.ok) {
       throw new Error(`Could not load cstimer.csv (status ${response.status})`);
     }
